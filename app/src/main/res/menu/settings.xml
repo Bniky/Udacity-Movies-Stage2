@@ -3,10 +3,10 @@
 
     <item
     android:id="@+id/popular"
-    android:title="Popular"/>
+    android:title="@string/popular"/>
 
     <item
         android:id="@+id/top_rated"
-        android:title="Top Rated"/>
+        android:title="@string/top_rated"/>
 
 </menu>

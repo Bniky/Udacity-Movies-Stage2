@@ -2,7 +2,6 @@ package com.bniky.nicholas.movies;
 
 import android.app.LoaderManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,15 +33,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String TOP_RATED_MOVIES_URL = BASE_SORT_URL + TOP_RATED_MOVIES_TAG + API_KEY;
 
     private static String currentURL = POPULAR_MOVIES_URL;
+    static boolean hasLoaderOne = false;
+    MoviePosterAdapter adapter;
+    GridView moviePosterGridView;
 
     View progress;
 
-    private static ArrayList<MovieImageData> movieData = new ArrayList<MovieImageData>();
-
-    //Movie base
-    private static final String MOVIEDB_BASE_URL = "http://api.themoviedb.org/3/movie";
-    //Image base URL
-    private static final String MOVIEDB_IMAGE_BASE = "http://image.tmdb.org/t/p/w185/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +48,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         progress = findViewById(R.id.loading_spinner);
 
         if(savedInstanceState == null || !savedInstanceState.containsKey("movie")) {
-            Log.v(LOG_TAG, "initLoader========================================");
+            Log.i(LOG_TAG, "Ent======================================================================");
+            progress.setVisibility(View.GONE);
             getLoaderManager().initLoader(0, null, this).forceLoad();
-        }else{
-            movieData = savedInstanceState.getParcelableArrayList("movie");
         }
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,35 +65,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        switch (id) {
+        switch (item.getItemId()) {
 
-            case R.id.top_rated:
-                if (!currentURL.equals(TOP_RATED_MOVIES_URL)) {
-                    currentURL = TOP_RATED_MOVIES_URL;
-                    getLoaderManager().initLoader(1, null, this).forceLoad();
-                    return true;
-                } else {
-                    return true;
-                }
+            case R.id.popular:
+                currentURL = POPULAR_MOVIES_URL;
+                getLoaderManager().getLoader(0).forceLoad();
+                progress.setVisibility(View.VISIBLE);
+                hasLoaderOne = false;
+                return true;
 
-                case R.id.popular:
-                if (!currentURL.equals(POPULAR_MOVIES_URL)) {
-                    currentURL = POPULAR_MOVIES_URL;
-                    getLoaderManager().initLoader(0, null, this).forceLoad();
-                    return true;
-                } else {
-                    return true;
-                }
+
+        case R.id.top_rated:
+
+                currentURL = TOP_RATED_MOVIES_URL;
+                getLoaderManager().initLoader(1, null, this).forceLoad();
+                hasLoaderOne = true;
+                progress.setVisibility(View.VISIBLE);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("movie", movieData);
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     public Loader<List<MovieImageData>> onCreateLoader(int id, Bundle args) {
@@ -111,31 +96,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<MovieImageData>> loader, List<MovieImageData> data) {
-
-        movieData.addAll(data);
-        updateUi(movieData);
+        progress.setVisibility(View.GONE);
+        updateUi(data);
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieImageData>> loader) {
-
+        progress.setVisibility(View.GONE);
+        moviePosterGridView.setAdapter(null);
     }
 
     public void updateUi(final List<MovieImageData> moviePosterData){
-        progress.setVisibility(View.GONE);
 
-        // Create a new {@link ArrayAdapter} of earthquakes
-        MoviePosterAdapter adapter = new MoviePosterAdapter(this, movieData);
+        // Create a new {@link ArrayAdapter} of MoviePosterAdapter
+        adapter = new MoviePosterAdapter(this, moviePosterData);
 
         TextView noItemFound = (TextView) findViewById(R.id.no_list);
         // Find a reference to the {@link ListView} in the layout
-        GridView moviePosterGridView = (GridView) findViewById(R.id.gridview);
+        moviePosterGridView = (GridView) findViewById(R.id.gridview);
         moviePosterGridView.setEmptyView(noItemFound);
 
         if(!isOnline()){
             noItemFound.setVisibility(View.VISIBLE);
         }else{
-            //noItemFound.setText("No earthquakes found!");
+            //noItemFound.setText("No Movies found!");
         }
 
 
@@ -158,6 +142,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
 }
 

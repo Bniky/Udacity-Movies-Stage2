@@ -2,4 +2,9 @@
     <string name="app_name">Movies</string>
 
     <string name="error_message">Opps something went wrong, do you have Internet?</string>
+
+    <string name="image_description">Image Poster display</string>
+
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top Rated</string>
 </resources>
