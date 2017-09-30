@@ -2,9 +2,11 @@ package com.bniky.nicholas.movies;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import java.util.List;
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     //API KEY
-    private static final String API_KEY = "";
+    private static final String API_KEY = "227bc80a341eb5ef323a521732265376";
 
     private static final String BASE_SORT_URL = "http://api.themoviedb.org/3/movie";
     //Popular movie query
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String TOP_RATED_MOVIES_URL = BASE_SORT_URL + TOP_RATED_MOVIES_TAG + API_KEY;
 
     private static String currentURL = POPULAR_MOVIES_URL;
-    static boolean hasLoaderOne = false;
+    static int loaderNumbr = 0;
     MoviePosterAdapter adapter;
     GridView moviePosterGridView;
 
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(savedInstanceState == null || !savedInstanceState.containsKey("movie")) {
             Log.i(LOG_TAG, "Ent======================================================================");
             progress.setVisibility(View.GONE);
-            getLoaderManager().initLoader(0, null, this).forceLoad();
+            getLoaderManager().initLoader(loaderNumbr, null, this).forceLoad();
         }
     }
 
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 currentURL = POPULAR_MOVIES_URL;
                 getLoaderManager().getLoader(0).forceLoad();
                 progress.setVisibility(View.VISIBLE);
-                hasLoaderOne = false;
+                loaderNumbr = 0;
                 return true;
 
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 currentURL = TOP_RATED_MOVIES_URL;
                 getLoaderManager().initLoader(1, null, this).forceLoad();
-                hasLoaderOne = true;
+                loaderNumbr = 1;
                 progress.setVisibility(View.VISIBLE);
                 return true;
         }
@@ -127,13 +130,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // so the list can be populated in the user interface
         moviePosterGridView.setAdapter(adapter);
 
-//        earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent openInfo = new Intent(Intent.ACTION_VIEW, Uri.parse(e.get(i).getUrl()));
-//                startActivity(openInfo);
-//            }
-//        });
+        moviePosterGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent openInfo = new Intent(MainActivity.this, MovieDetailScrollingActivity.class);
+                openInfo.putExtra("titleMovie", moviePosterData.get(i).getTitle());
+                openInfo.putExtra("release", moviePosterData.get(i).getReleaseOfFilm());
+                openInfo.putExtra("rating", moviePosterData.get(i).getVote_average());
+                openInfo.putExtra("overView", moviePosterData.get(i).getOverView());
+
+                openInfo.putExtra("poster", moviePosterData.get(i).getImage());
+                openInfo.putExtra("back_drop", moviePosterData.get(i).getBackDrop());
+
+                startActivity(openInfo);
+            }
+        });
     }
 
     public boolean isOnline() {

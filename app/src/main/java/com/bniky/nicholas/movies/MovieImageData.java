@@ -11,17 +11,21 @@ public class MovieImageData  {
     private String image;
     private String title;
     private int id;
+    double vote_average;
+    String backDrop;
+    String overView;
+    String releaseOfFilm;
 
-    public MovieImageData(String image, String title, int id){
+    public MovieImageData(String image, String title, int id, double vote_average, String backDrop, String overView, String releaseOfFilm){
         this.image = image;
         this.title = title;
         this.id = id;
+        this.vote_average = vote_average;
+        this.backDrop = backDrop;
+        this.overView = overView;
+        this.releaseOfFilm = releaseOfFilm;
     }
 
-
-    public int describeContents() {
-        return 0;
-    }
 
     public String getImage() {
         return image;
@@ -35,5 +39,11 @@ public class MovieImageData  {
         return id;
     }
 
+    public double getVote_average() { return vote_average; }
 
+    public String getBackDrop() { return backDrop;}
+
+    public String getOverView() { return overView; }
+
+    public String getReleaseOfFilm() { return releaseOfFilm; }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:layout_marginBottom="16dp"
-    >
+    android:layout_marginBottom="16dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/image_description"/>
+            android:contentDescription="@string/image_description" />
 
 
     </FrameLayout>
@@ -32,7 +32,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="8dp"
         android:paddingBottom="16dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
 
 
 </LinearLayout>

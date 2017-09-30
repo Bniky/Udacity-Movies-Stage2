@@ -83,6 +83,11 @@ public final class NetworkHelper {
                 String poster_path = objectF.getString("poster_path");
                 String title = objectF.getString("title");
                 int id = objectF.getInt("id");
+                double vote_Average = objectF.getDouble("vote_average");
+                String backDrop = objectF.getString("backdrop_path");
+                String overView = objectF.getString("overview");
+                String releaseOfFilm = objectF.getString("release_date");
+
 
 
 //                double mag = properties.getDouble("mag");
@@ -90,7 +95,7 @@ public final class NetworkHelper {
 //                long time = properties.getInt("time");
 //                String url2 = properties.getString("url");
 
-                movieData.add(new MovieImageData(poster_path, title, id));
+                movieData.add(new MovieImageData(poster_path, title, id, vote_Average, backDrop, overView, releaseOfFilm));
             }
 
         } catch (JSONException e) {
