@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     //API KEY
-    private static final String API_KEY = "227bc80a341eb5ef323a521732265376";
+    private static final String API_KEY = "";
 
     private static final String BASE_SORT_URL = "http://api.themoviedb.org/3/movie";
     //Popular movie query
@@ -114,15 +114,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Create a new {@link ArrayAdapter} of MoviePosterAdapter
         adapter = new MoviePosterAdapter(this, moviePosterData);
 
-        TextView noItemFound = (TextView) findViewById(R.id.no_list);
+        TextView messageInfo = (TextView) findViewById(R.id.no_list);
         // Find a reference to the {@link ListView} in the layout
         moviePosterGridView = (GridView) findViewById(R.id.gridview);
-        moviePosterGridView.setEmptyView(noItemFound);
+        //If view is empty show message
+        moviePosterGridView.setEmptyView(messageInfo);
 
         if(!isOnline()){
-            noItemFound.setVisibility(View.VISIBLE);
-        }else{
-            //noItemFound.setText("No Movies found!");
+            messageInfo.setText(R.string.error_message);
+            messageInfo.setVisibility(View.VISIBLE);
         }
 
 
@@ -134,14 +134,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent openInfo = new Intent(MainActivity.this, MovieDetailScrollingActivity.class);
-                openInfo.putExtra("titleMovie", moviePosterData.get(i).getTitle());
-                openInfo.putExtra("release", moviePosterData.get(i).getReleaseOfFilm());
-                openInfo.putExtra("rating", moviePosterData.get(i).getVote_average());
-                openInfo.putExtra("overView", moviePosterData.get(i).getOverView());
+                Bundle bundle = new Bundle();
+                bundle.putString("titleMovie", moviePosterData.get(i).getTitle());
+                bundle.putString("titleMovie", moviePosterData.get(i).getTitle());
+                bundle.putString("release", moviePosterData.get(i).getReleaseOfFilm());
+                bundle.putDouble("rating", moviePosterData.get(i).getVote_average());
+                bundle.putString("overView", moviePosterData.get(i).getOverView());
 
-                openInfo.putExtra("poster", moviePosterData.get(i).getImage());
-                openInfo.putExtra("back_drop", moviePosterData.get(i).getBackDrop());
+                bundle.putString("poster", moviePosterData.get(i).getImage());
+                bundle.putString("back_drop", moviePosterData.get(i).getBackDrop());
 
+                openInfo.putExtras(bundle);
                 startActivity(openInfo);
             }
         });

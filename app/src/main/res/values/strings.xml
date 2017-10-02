@@ -2,6 +2,7 @@
     <string name="app_name">Movies</string>
 
     <string name="error_message">Opps something went wrong, do you have Internet?</string>
+    <string name="no_list_found">No movie found.</string>
 
     <string name="image_description">Image Poster display</string>
 

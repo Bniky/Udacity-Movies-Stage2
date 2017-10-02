@@ -28,7 +28,6 @@
                 android:contentDescription="@string/title_activity_movie_detail_scrolling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/one"
                 android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar

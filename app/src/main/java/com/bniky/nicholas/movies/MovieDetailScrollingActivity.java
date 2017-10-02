@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +29,9 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
 
     String imageAdrress = "http://image.tmdb.org/t/p";
 
+    Bundle extras;
+    Bundle onStateBundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +51,38 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
         moviePoster = (ImageView) findViewById(R.id.poster);
         movieBackDrop = (ImageView) findViewById(R.id.back_drop);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
 
+        extras = getIntent().getExtras();
+        if(extras != null) {
             loadDataFromIntent(extras);
         }
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_movie_detail_scrolling, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     void loadDataFromIntent(Bundle extraFromIntent){
         String titleMovie = extraFromIntent.get("titleMovie").toString();
         String release = extraFromIntent.get("release").toString();
-        String rating = extraFromIntent.get("rating").toString();
+        String rating = extraFromIntent.get("rating").toString() + "/10";
         String overView = extraFromIntent.get("overView").toString();
 
         String poster = extraFromIntent.get("poster").toString();
@@ -66,21 +91,11 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
 
         title.setText(titleMovie);
         releaseDate.setText(release);
-        movieRating.setText(rating+ "/10");
+        movieRating.setText(rating);
         movieOverView.setText(overView);
 
-        Picasso.with(getApplicationContext()).load(imageAdrress + "/w342/" + poster).into(moviePoster);
-        Picasso.with(getApplicationContext()).load(imageAdrress + "/w780/"+ back_drop).into(movieBackDrop);
+        Picasso.with(getApplicationContext()).load(imageAdrress + "/w185/" + poster).into(moviePoster);
+        Picasso.with(getApplicationContext()).load(imageAdrress + "/original/"+ back_drop).into(movieBackDrop);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

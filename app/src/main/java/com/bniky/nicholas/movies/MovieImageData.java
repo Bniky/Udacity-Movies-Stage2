@@ -7,14 +7,14 @@ import android.os.Parcelable;
  * Created by Nicholas on 22/09/2017.
  */
 
-public class MovieImageData  {
+public class MovieImageData {
     private String image;
     private String title;
     private int id;
-    double vote_average;
-    String backDrop;
-    String overView;
-    String releaseOfFilm;
+    private double vote_average;
+    private String backDrop;
+    private String overView;
+    private String releaseOfFilm;
 
     public MovieImageData(String image, String title, int id, double vote_average, String backDrop, String overView, String releaseOfFilm){
         this.image = image;
@@ -25,6 +25,7 @@ public class MovieImageData  {
         this.overView = overView;
         this.releaseOfFilm = releaseOfFilm;
     }
+
 
 
     public String getImage() {
@@ -46,4 +47,5 @@ public class MovieImageData  {
     public String getOverView() { return overView; }
 
     public String getReleaseOfFilm() { return releaseOfFilm; }
+
 }

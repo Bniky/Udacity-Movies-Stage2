@@ -25,10 +25,11 @@
 
                 <ImageView
                     android:id="@+id/poster"
+                    android:contentDescription="@string/title_activity_movie_detail_scrolling"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
-                    android:src="@drawable/spac" />
+                    android:paddingLeft="0dp"
+                    android:paddingRight="16dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
