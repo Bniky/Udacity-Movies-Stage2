@@ -1,7 +1,5 @@
 package com.bniky.nicholas.movies;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * Created by Nicholas on 22/09/2017.
