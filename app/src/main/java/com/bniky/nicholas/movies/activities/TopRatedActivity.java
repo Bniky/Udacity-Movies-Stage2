@@ -1,120 +1,73 @@
-package com.bniky.nicholas.movies;
+package com.bniky.nicholas.movies.activities;
 
 import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.bniky.nicholas.movies.Adapters.FavouriteMovieCursorAdapter;
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract;
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract.MovieEntry;
-import com.bniky.nicholas.movies.DbHelper.FavouriteMovieDbHelper;
-
+import com.bniky.nicholas.movies.adapters.FavouriteMovieCursorAdapter;
+import com.bniky.nicholas.movies.adapters.MoviePosterAdapter;
+import com.bniky.nicholas.movies.helper.ProjectHelper;
+import com.bniky.nicholas.movies.contract.FavouriteMovieContract.MovieEntry;
+import com.bniky.nicholas.movies.data.MovieImageData;
+import com.bniky.nicholas.movies.loaders.MovieImageLoader;
+import com.bniky.nicholas.movies.R;
 
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieImageData>>{
+public class TopRatedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MovieImageData>>{
 
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
-    //API KEY
-    private static final String API_KEY = "";
-    //Screen position
-    static int mPostion;
-    private static final String BASE_SORT_URL = "http://api.themoviedb.org/3/movie";
-    //Popular movie query
-    private static final String POPULAR_MOVIES_TAG = "/popular?api_key=";
-    //Top rated movie query
-    private static final String TOP_RATED_MOVIES_TAG = "/top_rated?api_key=";
 
-    private static String POPULAR_MOVIES_URL = BASE_SORT_URL + POPULAR_MOVIES_TAG + API_KEY;
-    private static final String TOP_RATED_MOVIES_URL = BASE_SORT_URL + TOP_RATED_MOVIES_TAG + API_KEY;
+    private static String currentURL = ProjectHelper.getTopRatedMoviesUrl();
 
-    private static String currentURL = POPULAR_MOVIES_URL;
-    private final static int popularId = 0;
-    private final static int topRatedId = 1;
+    private static int mPostion;
 
     FavouriteMovieCursorAdapter mfavouriteMovieCursorAdapter;
-    FavouriteMovieDbHelper mFavouriteMovieDbHelper;
 
     TextView messageInfo;
 
-    private static final String [] PROJECTION = {MovieEntry._ID, MovieEntry.COLUMN_MOVIE_ID, MovieEntry.COLUMN_TITLE,
-            MovieEntry.COLUMN_IMAGE, MovieEntry.COLUMN_VOTE, MovieEntry.COLUMN_BACK_DROP_IMG, MovieEntry.COLUMN_OVER_VIEW,
-    MovieEntry.COLUMN_RELEASE_OF_FILM};
+    public static int getmPostion() {
+        return mPostion;
+    }
 
-    private LoaderManager.LoaderCallbacks<Cursor> mFavouriteCursorLoader = new LoaderManager.LoaderCallbacks<Cursor>() {
-        @Override
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getApplicationContext(),
-                    MovieEntry.CONTENT_URI,
-                    PROJECTION,
-                    null,
-                    null,
-                    null);
-        }
-
-        @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            updateUiFavouriteDb(data);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
-            mfavouriteMovieCursorAdapter.swapCursor(null);
-        }
-    };
+    public static String[] getPROJECTION() {
+        return ProjectHelper.getPROJECTION();
+    }
 
     MoviePosterAdapter adapter;
     GridView moviePosterGridView;
 
     View progress;
 
-    public static String getBaseSortUrl() {
-        return BASE_SORT_URL;
-    }
-
-    public static String getApiKey() {
-        return API_KEY;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTitle(getText(R.string.app_name) + " " + getText(R.string.top_rated));
 
         messageInfo = (TextView) findViewById(R.id.no_list);
 
         progress = findViewById(R.id.loading_spinner);
 
         if(savedInstanceState == null || !savedInstanceState.containsKey("movie")) {
-            Log.i(LOG_TAG, "Ent======================================================================");
             progress.setVisibility(View.GONE);
-            getLoaderManager().initLoader(popularId, null, this);
+            getLoaderManager().initLoader(ProjectHelper.getTopRatedId(), null, this);
         }
-    }
-
-    @Override
-    protected void onPostResume() {
-        if(mPostion > 0){
-            moviePosterGridView.setSelection(mPostion);
-        }
-        super.onPostResume();
     }
 
     @Override
@@ -130,22 +83,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()) {
 
             case R.id.popular:
-                currentURL = POPULAR_MOVIES_URL;
-                getLoaderManager().initLoader(popularId, null, this).forceLoad();
-                progress.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(TopRatedActivity.this, MainActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.top_rated:
-                currentURL = TOP_RATED_MOVIES_URL;
-                getLoaderManager().initLoader(topRatedId, null, this).forceLoad();
+                getLoaderManager().initLoader(ProjectHelper.getTopRatedId(), null, this).forceLoad();
                 progress.setVisibility(View.VISIBLE);
                 return true;
 
             case R.id.favourite:
-                moviePosterGridView.setAdapter(null);
-                mfavouriteMovieCursorAdapter = new FavouriteMovieCursorAdapter(this, null);
-                moviePosterGridView.setAdapter(mfavouriteMovieCursorAdapter);
-                getLoaderManager().initLoader(3, null, mFavouriteCursorLoader).forceLoad();
+                Intent intentFavouriteMovies = new Intent(TopRatedActivity.this, FavouriteActivity.class);
+                startActivity(intentFavouriteMovies);
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
 
         }
         return super.onOptionsItemSelected(item);
@@ -154,9 +107,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<MovieImageData>> onCreateLoader(int id, Bundle args) {
-        Log.i(LOG_TAG, "LOADER============================");
         progress.setVisibility(View.VISIBLE);
-        return new MovieImageLoader(MainActivity.this, currentURL);
+        return new MovieImageLoader(TopRatedActivity.this, currentURL);
     }
 
     @Override
@@ -185,13 +137,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         moviePosterGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent openInfo = new Intent(MainActivity.this, MovieDetailScrollingActivity.class);
+                Intent openInfo = new Intent(TopRatedActivity.this, MovieDetailScrollingActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("titleMovie", data.getString(data.getColumnIndex(MovieEntry.COLUMN_TITLE)));
                 bundle.putString("release", data.getString(data.getColumnIndex(MovieEntry.COLUMN_RELEASE_OF_FILM)));
 
                 double ratings = Double.parseDouble(data.getString(data.getColumnIndex(MovieEntry.COLUMN_VOTE)));
-                Log.i(LOG_TAG, "VOTE -------------------- " + ratings);
                 bundle.putDouble("rating", ratings);
 
                 bundle.putString("overView", data.getString(data.getColumnIndex(MovieEntry.COLUMN_OVER_VIEW)));
@@ -202,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 openInfo.putExtras(bundle);
                 startActivity(openInfo);
-                Log.i(LOG_TAG, "MPOS ---------------");
 
                 mPostion = position;
             }
@@ -231,11 +181,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         moviePosterGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent openInfo = new Intent(MainActivity.this, MovieDetailScrollingActivity.class);
+                Intent openInfo = new Intent(TopRatedActivity.this, MovieDetailScrollingActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("titleMovie", moviePosterData.get(position).getTitle());
                 bundle.putString("release", moviePosterData.get(position).getReleaseOfFilm());
-                Log.i(LOG_TAG, "Rate ------ " + moviePosterData.get(position).getVote_average());
+
                 bundle.putDouble("rating", moviePosterData.get(position).getVote_average());
                 bundle.putString("overView", moviePosterData.get(position).getOverView());
                 bundle.putInt("id", moviePosterData.get(position).getId());
@@ -245,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 openInfo.putExtras(bundle);
                 startActivity(openInfo);
-                Log.i(LOG_TAG, "MPOS ---------------");
 
                 mPostion = position;
             }

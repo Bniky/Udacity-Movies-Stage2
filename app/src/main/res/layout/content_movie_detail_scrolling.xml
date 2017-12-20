@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:visibility="invisible"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.bniky.nicholas.movies.MovieDetailScrollingActivity"
+    tools:context="com.bniky.nicholas.movies.activities.MovieDetailScrollingActivity"
     tools:showIn="@layout/activity_movie_detail_scrolling">
 
     <ScrollView
@@ -25,15 +25,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/c_linearlayout">
 
                 <ImageView
                     android:id="@+id/poster"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/title_activity_movie_detail_scrolling"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="16dp" />
+                    android:paddingRight="@dimen/poster_padding_r"
+                    android:paddingEnd="@dimen/poster_padding_r"
+                    android:paddingLeft="@dimen/zero"
+                    android:paddingStart="@dimen/zero"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -45,16 +47,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="21sp"
+                        android:textSize="@dimen/title_size"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="24dp"
+                        android:paddingTop="@dimen/padding_top"
                         android:text="@string/release_date"
                         android:textColor="@color/black"
-                        android:textSize="21sp" />
+                        android:textSize="@dimen/title_size" />
 
                     <TextView
                         android:id="@+id/release"
@@ -68,7 +70,7 @@
                         android:paddingTop="16dp"
                         android:text="@string/rating"
                         android:textColor="@color/black"
-                        android:textSize="21sp" />
+                        android:textSize="@dimen/title_size" />
 
                     <TextView
                         android:id="@+id/rating"
@@ -88,6 +90,7 @@
                 android:padding="16dp" />
 
             <ImageView
+                android:contentDescription="@string/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorAccent"
@@ -99,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="21sp"
+                android:textSize="@dimen/title_size"
                 android:text="@string/trailers"
                 android:padding="16dp"/>
 
@@ -113,10 +116,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="21sp"
+                android:textSize="@dimen/title_size"
                 android:text="@string/reviews"
-                android:padding="16dp"
-                android:layout_marginTop="16dp"/>
+                android:padding="@dimen/review_padding"
+                android:layout_marginTop="@dimen/review_margin"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cv_of_reviews"
@@ -128,7 +131,7 @@
                 android:id="@+id/no_rv_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_margin="@dimen/review_padding"
                 android:visibility="invisible">
 
                 <android.support.constraint.ConstraintLayout
@@ -140,11 +143,11 @@
                         android:id="@+id/no_review"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="No Reviews"
-                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/no_rev"
+                        android:layout_marginStart="@dimen/no_rev"
+                        android:layout_marginTop="@dimen/no_rev"
+                        android:text="@string/no_review"
+                        android:textSize="@dimen/no_rev_text_s"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
@@ -154,11 +157,9 @@
                         android:id="@+id/description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textSize="16sp"
-                        android:textStyle="italic"
-                        app:layout_constraintStart_toStartOf="@+id/name"
-                        app:layout_constraintTop_toBottomOf="@+id/name" />
+                        android:layout_marginTop="@dimen/des_margin_top"
+                        android:textSize="@dimen/des_text_s"
+                        android:textStyle="italic" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 

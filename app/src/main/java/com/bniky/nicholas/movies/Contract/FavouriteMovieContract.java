@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies.Contract;
+package com.bniky.nicholas.movies.contract;
 
 import android.content.ContentResolver;
 import android.net.Uri;

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop">
             <intent-filter>
@@ -32,21 +32,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieDetailScrollingActivity"
+            android:name=".activities.MovieDetailScrollingActivity"
             android:label="@string/title_activity_movie_detail_scrolling"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bniky.nicholas.movies.MainActivity" />
+                android:value="com.bniky.nicholas.movies.activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".activities.TopRatedActivity"
+            android:label="@string/top_rated"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bniky.nicholas.movies.activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".activities.FavouriteActivity"
+            android:label="@string/favourite"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bniky.nicholas.movies.activities.MainActivity" />
         </activity>
 
         <provider
-            android:name=".DbProvider.MovieProvider"
+            android:name=".dbProvider.MovieProvider"
             android:authorities="com.bniky.nicholas.movies"
             android:exported="false" />
 
-        <activity android:name=".TopRatedActivity"></activity>
     </application>
 
 </manifest>

@@ -1,13 +1,11 @@
-package com.bniky.nicholas.movies;
+package com.bniky.nicholas.movies.activities;
 
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,14 +28,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bniky.nicholas.movies.Adapters.ReviewCardViewAdapter;
-import com.bniky.nicholas.movies.Adapters.TrailerAdapter;
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract;
-import com.bniky.nicholas.movies.Data.MovieTrailer;
-import com.bniky.nicholas.movies.Data.ReviewsOfMovie;
-import com.bniky.nicholas.movies.DbHelper.FavouriteMovieDbHelper;
-import com.bniky.nicholas.movies.Loaders.ReviewLoader;
-import com.bniky.nicholas.movies.Loaders.TrailerLoader;
+import com.bniky.nicholas.movies.adapters.ReviewCardViewAdapter;
+import com.bniky.nicholas.movies.adapters.TrailerAdapter;
+import com.bniky.nicholas.movies.contract.FavouriteMovieContract;
+import com.bniky.nicholas.movies.data.MovieTrailer;
+import com.bniky.nicholas.movies.data.ReviewsOfMovie;
+import com.bniky.nicholas.movies.dbHelper.FavouriteMovieDbHelper;
+import com.bniky.nicholas.movies.helper.ProjectHelper;
+import com.bniky.nicholas.movies.loaders.ReviewLoader;
+import com.bniky.nicholas.movies.loaders.TrailerLoader;
+import com.bniky.nicholas.movies.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -94,7 +94,7 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
 
                 }
             };
-
+//Movie review
     private LoaderManager.LoaderCallbacks<List<ReviewsOfMovie>> reviewResultLoaderListener =
             new LoaderManager.LoaderCallbacks<List<ReviewsOfMovie>>()
 
@@ -236,25 +236,6 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.add_favourite),
                     Toast.LENGTH_SHORT).show();
         }
-
-
-//        cursor = getContentResolver().query(FavouriteMovieContract.MovieEntry.CONTENT_URI,
-//                null,
-//                null,
-//                null,
-//                null);
-//
-//        while(cursor.moveToNext()){
-//
-//            int mId = cursor.getColumnIndex(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_ID);
-//            int tiId = cursor.getColumnIndex(FavouriteMovieContract.MovieEntry.COLUMN_TITLE);
-//
-//            int mov = cursor.getInt(mId);
-//            String titleI = cursor.getString(tiId);
-//
-//            Log.i(LOG, ""+ mov + " ---- " + titleI);
-//        }
-
     }
 
     private void removeMovieFromFavourite() {
@@ -274,25 +255,11 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
 
         String [] projection = { FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_ID };
 
-
         cursor = getContentResolver().query(currentMovieId,
                 null,
                null,
                 null,
                 null);
-//
-        Log.i(LOG, "Removed ID - " + cursor.getCount());
-
-//        while(cursor.moveToNext()){
-//
-//            int mId = cursor.getColumnIndex(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_ID);
-//            int tiId = cursor.getColumnIndex(FavouriteMovieContract.MovieEntry.COLUMN_TITLE);
-//
-//            int mov = cursor.getInt(mId);
-//            String titleI = cursor.getString(tiId);
-//
-//            Log.i(LOG, ""+ mov + " ---- " + titleI);
-//        }
 
     }
 
@@ -336,8 +303,8 @@ public class MovieDetailScrollingActivity extends AppCompatActivity {
 
         movieId = extraFromIntent.getInt("id");
         Log.i("MovieDetailScrolling", "" + movieId);
-        urlTrailer = MainActivity.getBaseSortUrl() +"/" + movieId + "/videos?api_key=" + MainActivity.getApiKey();
-        urlReview = MainActivity.getBaseSortUrl() +"/" + movieId + "/reviews?api_key=" + MainActivity.getApiKey();
+        urlTrailer = ProjectHelper.getBaseSortUrl() +"/" + movieId + "/videos?api_key=" + ProjectHelper.getApiKey();
+        urlReview = ProjectHelper.getBaseSortUrl() +"/" + movieId + "/reviews?api_key=" + ProjectHelper.getApiKey();
 
         setTitle(titleMovie);
         title.setText(titleMovie);

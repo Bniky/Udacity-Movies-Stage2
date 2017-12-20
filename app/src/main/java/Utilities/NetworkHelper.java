@@ -8,9 +8,9 @@ import org.json.JSONException;
 
 import android.util.Log;
 
-import com.bniky.nicholas.movies.Data.MovieTrailer;
-import com.bniky.nicholas.movies.Data.ReviewsOfMovie;
-import com.bniky.nicholas.movies.MovieImageData;
+import com.bniky.nicholas.movies.data.MovieTrailer;
+import com.bniky.nicholas.movies.data.ReviewsOfMovie;
+import com.bniky.nicholas.movies.data.MovieImageData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

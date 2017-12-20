@@ -1,3 +1,32 @@
 <resources>
     <dimen name="app_bar_height">300dp</dimen>
+
+    <!-- Gridview -->
+    <dimen name="Linear_top_padding">16dp</dimen>
+    <dimen name="grid_view_column_width">100dp</dimen>
+    <dimen name="grid_view_vertical_Spacing">24dp</dimen>
+    <dimen name="grid_view_horizontal_Spacing">10dp</dimen>
+
+    <dimen name="zero">0dp</dimen>
+
+    <!-- Movie detail -->
+    <dimen name="c_linearlayout">16dp</dimen>
+    <dimen name="poster_padding_r">16dp</dimen>
+
+    <dimen name="title_size">21sp</dimen>
+    <dimen name="padding_top">24dp</dimen>
+
+    <dimen name="review_padding">16dp</dimen>
+    <dimen name="review_margin">16dp</dimen>
+
+    <dimen name="no_rev_text_s">18sp</dimen>
+    <dimen name="no_rev">8dp</dimen>
+
+    <dimen name="des_margin_top">4dp</dimen>
+    <dimen name="des_text_s">16sp</dimen>
+    <dimen name="movie_name">12sp</dimen>
+
+    <dimen name="movie_name_padding_top">4dp</dimen>
+    <dimen name="movie_name_padding_Right">8dp</dimen>
+    <dimen name="movie_name_padding_Bottom">16dp</dimen>
 </resources>

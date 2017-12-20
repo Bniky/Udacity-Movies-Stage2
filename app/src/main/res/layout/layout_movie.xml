@@ -25,13 +25,15 @@
         android:id="@+id/textview_movie_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="@dimen/movie_name"
         tools:text="@string/app_name"
         android:textStyle="bold"
-        android:paddingTop="4dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="16dp"
+        android:paddingTop="@dimen/movie_name_padding_top"
+        android:paddingLeft="@dimen/zero"
+        android:paddingStart="@dimen/zero"
+        android:paddingRight="@dimen/movie_name_padding_Right"
+
+        android:paddingBottom="@dimen/movie_name_padding_Bottom"
         android:gravity="center_horizontal" />
 
 

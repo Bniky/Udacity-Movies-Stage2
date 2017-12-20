@@ -1,10 +1,10 @@
-package com.bniky.nicholas.movies.Loaders;
+package com.bniky.nicholas.movies.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import com.bniky.nicholas.movies.Data.MovieTrailer;
+import com.bniky.nicholas.movies.data.MovieTrailer;
 
 import java.util.List;
 

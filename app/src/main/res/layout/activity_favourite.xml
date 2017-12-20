@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/Linear_top_padding"
     android:orientation="horizontal"
-    tools:context="com.bniky.nicholas.movies.activities.MainActivity">
+    tools:context="com.bniky.nicholas.movies.activities.FavouriteActivity">
 
     <ProgressBar
         android:id="@+id/loading_spinner"

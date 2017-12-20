@@ -1,11 +1,10 @@
-package com.bniky.nicholas.movies.Loaders;
+package com.bniky.nicholas.movies.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 
-import com.bniky.nicholas.movies.Data.ReviewsOfMovie;
+import com.bniky.nicholas.movies.data.ReviewsOfMovie;
 
 import java.util.List;
 

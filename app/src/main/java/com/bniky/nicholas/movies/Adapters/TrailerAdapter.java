@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies.Adapters;
+package com.bniky.nicholas.movies.adapters;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bniky.nicholas.movies.Data.MovieTrailer;
+import com.bniky.nicholas.movies.data.MovieTrailer;
 import com.bniky.nicholas.movies.R;
 
 import java.util.List;
@@ -24,6 +24,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     List<MovieTrailer> items;
     Context context;
+
+    //Number of trailer
+    int i = 1;
 
     public TrailerAdapter(Context context, List<MovieTrailer> items){
         this.context = context;
@@ -39,15 +42,16 @@ public class TrailerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        String trailer_p = "Trailer " + (position +1);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        String trailer_p = "Trailer " + (position);
         ((Item)holder).textView.setText(trailer_p);
 
+        final int pos = position;
         ((Item) holder).constraintLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                watchYoutubeVideo(context, items.get(position).getKey());
+                watchYoutubeVideo(context, items.get(pos).getKey());
             }
         });
     }

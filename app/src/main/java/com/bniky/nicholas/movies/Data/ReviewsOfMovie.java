@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies.Data;
+package com.bniky.nicholas.movies.data;
 
 /**
  * Created by Nicholas on 08/12/2017.

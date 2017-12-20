@@ -1,11 +1,10 @@
-package com.bniky.nicholas.movies.DbHelper;
+package com.bniky.nicholas.movies.dbHelper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract;
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract.MovieEntry;
+import com.bniky.nicholas.movies.contract.FavouriteMovieContract.MovieEntry;
 
 /**
  * Created by Nicholas on 18/12/2017.

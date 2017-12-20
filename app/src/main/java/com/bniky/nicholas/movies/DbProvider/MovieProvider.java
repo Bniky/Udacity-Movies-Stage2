@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies.DbProvider;
+package com.bniky.nicholas.movies.dbProvider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -11,9 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.bniky.nicholas.movies.Contract.FavouriteMovieContract;
-import com.bniky.nicholas.movies.DbHelper.FavouriteMovieDbHelper;
-import com.bniky.nicholas.movies.MainActivity;
+import com.bniky.nicholas.movies.contract.FavouriteMovieContract;
+import com.bniky.nicholas.movies.dbHelper.FavouriteMovieDbHelper;
 
 /**
  * Created by Nicholas on 18/12/2017.

@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies;
+package com.bniky.nicholas.movies.data;
 
 
 /**

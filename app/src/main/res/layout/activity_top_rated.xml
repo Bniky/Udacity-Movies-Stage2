@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bniky.nicholas.movies.TopRatedActivity">
+    android:paddingTop="@dimen/Linear_top_padding"
+    android:orientation="horizontal"
+    tools:context="com.bniky.nicholas.movies.activities.TopRatedActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/no_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_list_found"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:columnWidth="@dimen/grid_view_column_width"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="@dimen/grid_view_vertical_Spacing"
+        android:horizontalSpacing="@dimen/grid_view_horizontal_Spacing"
+        android:stretchMode="spacingWidthUniform" />
+
+
+</LinearLayout>

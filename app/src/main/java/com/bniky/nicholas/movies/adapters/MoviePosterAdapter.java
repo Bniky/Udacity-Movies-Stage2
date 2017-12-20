@@ -1,4 +1,4 @@
-package com.bniky.nicholas.movies;
+package com.bniky.nicholas.movies.adapters;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bniky.nicholas.movies.data.MovieImageData;
+import com.bniky.nicholas.movies.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

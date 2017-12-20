@@ -23,6 +23,7 @@
         tools:text="Trailer 1" />
 
     <ImageView
+        android:contentDescription="@string/line"
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -38,6 +39,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:contentDescription="@string/play"
         android:id="@+id/play"
         android:layout_width="35dp"
         android:layout_height="38dp"
