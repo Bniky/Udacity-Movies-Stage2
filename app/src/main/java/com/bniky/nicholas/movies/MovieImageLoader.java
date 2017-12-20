@@ -31,7 +31,7 @@ public class MovieImageLoader extends AsyncTaskLoader<List<MovieImageData>> {
 
     @Override
     public List<MovieImageData> loadInBackground() {
-        List <MovieImageData> storeMoviePicture = NetworkHelper.extractMovieImage(url);
+        List <MovieImageData> storeMoviePicture = NetworkHelper.extractData(url);
         return storeMoviePicture;
     }
 }

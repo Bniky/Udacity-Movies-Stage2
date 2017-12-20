@@ -6,9 +6,10 @@ package com.bniky.nicholas.movies;
  */
 
 public class MovieImageData {
-    private String image;
-    private String title;
     private int id;
+    private String title;
+    private String image;
+
     private double vote_average;
     private String backDrop;
     private String overView;

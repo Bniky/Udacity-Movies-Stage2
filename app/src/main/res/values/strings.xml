@@ -8,9 +8,20 @@
 
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="favourite">Favourite</string>
     <string name="title_activity_movie_detail_scrolling">Movie Details</string>
     <string name="rating">Rating</string>
     <string name="release_date">Release Date</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+
+    <string name="add_favourite">Added to favourite</string>
+    <string name="remove_favourite">Removed from favourite</string>
+
+    <string name="editor_insert_movie_favourite_failed">Failed to insert into favourites</string>
+
+    <string name="editor_delete_movie_favourite_failed">Failed to delete into favourites</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

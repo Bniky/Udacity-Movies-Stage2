@@ -2,13 +2,17 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:visibility="invisible"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.bniky.nicholas.movies.MovieDetailScrollingActivity"
     tools:showIn="@layout/activity_movie_detail_scrolling">
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
@@ -25,9 +29,9 @@
 
                 <ImageView
                     android:id="@+id/poster"
-                    android:contentDescription="@string/title_activity_movie_detail_scrolling"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/title_activity_movie_detail_scrolling"
                     android:paddingLeft="0dp"
                     android:paddingRight="16dp" />
 
@@ -47,10 +51,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:paddingTop="24dp"
-                        android:textSize="21sp"
-                        android:text="@string/release_date" />
+                        android:text="@string/release_date"
+                        android:textColor="@color/black"
+                        android:textSize="21sp" />
 
                     <TextView
                         android:id="@+id/release"
@@ -61,17 +65,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:paddingTop="16dp"
-                        android:textSize="21sp"
-                        android:text="@string/rating" />
+                        android:text="@string/rating"
+                        android:textColor="@color/black"
+                        android:textSize="21sp" />
 
                     <TextView
                         android:id="@+id/rating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        tools:text="5/10" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -82,7 +85,83 @@
                 android:layout_height="wrap_content"
                 android:text="@string/large_text"
                 android:textSize="16sp"
-                android:padding="8dp" />
+                android:padding="16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"
+                android:layout_marginTop ="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="21sp"
+                android:text="@string/trailers"
+                android:padding="16dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_of_trailers_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="21sp"
+                android:text="@string/reviews"
+                android:padding="16dp"
+                android:layout_marginTop="16dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cv_of_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/no_rv_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:visibility="invisible">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/no_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="No Reviews"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        app:layout_constraintStart_toStartOf="@+id/name"
+                        app:layout_constraintTop_toBottomOf="@+id/name" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

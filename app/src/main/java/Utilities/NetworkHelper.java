@@ -8,6 +8,8 @@ import org.json.JSONException;
 
 import android.util.Log;
 
+import com.bniky.nicholas.movies.Data.MovieTrailer;
+import com.bniky.nicholas.movies.Data.ReviewsOfMovie;
 import com.bniky.nicholas.movies.MovieImageData;
 
 import org.json.JSONArray;
@@ -22,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -69,7 +72,6 @@ public final class NetworkHelper {
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
-            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
 
             jsonResponse = makeHttpRequest(url);
@@ -88,13 +90,6 @@ public final class NetworkHelper {
                 String overView = objectF.getString("overview");
                 String releaseOfFilm = objectF.getString("release_date");
 
-
-
-//                double mag = properties.getDouble("mag");
-//                String place = properties.getString("place");
-//                long time = properties.getInt("time");
-//                String url2 = properties.getString("url");
-
                 movieData.add(new MovieImageData(poster_path, title, id, vote_Average, backDrop, overView, releaseOfFilm));
             }
 
@@ -112,7 +107,88 @@ public final class NetworkHelper {
         return movieData;
     }
 
+    public static <T> ArrayList<T> extractMovieTrailer(String requestUrl) {
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Create an empty ArrayList that we can start adding earthquakes to
+        ArrayList<T> movieTrailerData = new ArrayList<>();
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+
+        // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
+            // build up a list of Earthquake objects with the corresponding data.
+            Log.i("NetworkHelper", url.toString());
+
+            jsonResponse = makeHttpRequest(url);
+            Log.i("NetworkHelper", jsonResponse);
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray results = jsonObject.optJSONArray("results");
+
+            Log.v(LOG_TAG, "FORLOOPING--in MovieTrailer");
+            for(int i=0;i<results.length();i++){
+                JSONObject objectF = results.getJSONObject(i);
+
+                String key = objectF.getString("key");
+
+                movieTrailerData.add((T) new MovieTrailer(key));
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("NetworkHelper", "Problem parsing the movie JSON results " + requestUrl, e);
+
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+
+        // Return the list of earthquakes
+        return movieTrailerData;
+    }
+
+    public static <T> ArrayList<T> extractData(String requestUrl) {
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Create an empty ArrayList that we can start adding earthquakes to
+        ArrayList<T> movieData = new ArrayList<>();
+
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+
+        // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+
+        //Direct the Loader to extract the correct information, Look for key words in URL
+        if(requestUrl.contains("popular") || requestUrl.contains("top_rate")) {
+            return imageDataFetch(movieData, jsonResponse, url);
+        }else if(requestUrl.contains("video")){
+            return trailerVideoDataFetch(movieData, jsonResponse, url);
+        }else if(requestUrl.contains("review")){
+            return reviewMovieDataFetch(movieData, jsonResponse, url);
+        }
+            return null;
+
+    }
 
     /**
      * Returns new URL object from the given string URL.
@@ -186,4 +262,111 @@ public final class NetworkHelper {
         return output.toString();
     }
 
+    //Returns ArrayList for Movie details first Activity GridView
+    private static <T> ArrayList<T> imageDataFetch(List<T> movieData, String jsonResponse, URL url) {
+
+        // build up a list of MovieData objects with the corresponding data.
+        try {
+            jsonResponse = makeHttpRequest(url);
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray results = jsonObject.optJSONArray("results");
+
+            Log.v(LOG_TAG, "FORLOOPING");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject objectF = results.getJSONObject(i);
+
+                String poster_path = objectF.getString("poster_path");
+                String title = objectF.getString("title");
+                int id = objectF.getInt("id");
+                double vote_Average = objectF.getDouble("vote_average");
+                String backDrop = objectF.getString("backdrop_path");
+                String overView = objectF.getString("overview");
+                String releaseOfFilm = objectF.getString("release_date");
+
+                movieData.add((T) new MovieImageData(poster_path, title, id, vote_Average, backDrop, overView, releaseOfFilm));
+            }
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("NetworkHelper", "Problem parsing the movie JSON results " + url.toString(), e);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        return (ArrayList<T>) movieData;
+    }
+
+    private static <T> ArrayList<T> trailerVideoDataFetch(List<T> movieData, String jsonResponse, URL url){
+
+        try {
+
+            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
+            // build up a list of Earthquake objects with the corresponding data.
+            Log.i("NetworkHelper", url.toString());
+
+            jsonResponse = makeHttpRequest(url);
+            Log.i("NetworkHelper", jsonResponse);
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray results = jsonObject.optJSONArray("results");
+
+            Log.v(LOG_TAG, "FORLOOPING--in MovieTrailer");
+            for(int i=0;i<results.length();i++){
+                JSONObject objectF = results.getJSONObject(i);
+
+                String key = objectF.getString("key");
+
+                movieData.add((T) new MovieTrailer(key));
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("NetworkHelper", "Problem parsing the movie JSON results " + url.toString(), e);
+
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+
+        // Return the list of earthquakes
+        return  (ArrayList <T>) movieData;
+    }
+
+    private static <T> ArrayList<T> reviewMovieDataFetch(List<T> movieData, String jsonResponse, URL url){
+
+        try {
+
+            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
+            // build up a list of Earthquake objects with the corresponding data.
+            Log.i("NetworkHelper", url.toString());
+
+            jsonResponse = makeHttpRequest(url);
+            Log.i("NetworkHelper", jsonResponse);
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray results = jsonObject.optJSONArray("results");
+
+            Log.v(LOG_TAG, "FORLOOPING--in Reviews");
+            for(int i=0;i<results.length();i++){
+                JSONObject objectF = results.getJSONObject(i);
+
+                String author = objectF.getString("author");
+                String content = objectF.getString("content");
+
+                movieData.add((T) new ReviewsOfMovie(author, content));
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("NetworkHelper", "Problem parsing the movie JSON results " + url.toString(), e);
+
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+
+        // Return the list of earthquakes
+        return  (ArrayList <T>) movieData;
+    }
 }
